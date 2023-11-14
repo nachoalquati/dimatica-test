@@ -1,3 +1,13 @@
+import db from "@db"
+
+interface users {
+    email: string;
+    first_name: string;
+    last_name: string;
+    roles: string[];
+    last_connection_date: Date;
+  }
+  // To remind me the schema
 
 let searchString = '';
 // The incoming text
@@ -12,13 +22,13 @@ function getSixMonthsAgoDate(date) {
 
 let query = {
     $or: [
-        { email: searchText },
+        { email: searchString },
         { first_name: {
-            $regex: `^${searchText}`,
+            $regex: `^${searchString}`,
             $options: 'i' 
         }},
         { last_name:  { 
-            $regex: `^${searchText}`, 
+            $regex: `^${searchString}`, 
             $options: 'i' 
         }}
     ],
@@ -30,7 +40,7 @@ let query = {
 
 db.users.find(query)
 
-// To improve the speed we could create an index for each field we are going to use.
+// To improve the speed we could create an index                       for each field we are going to use.
 db.users.createIndex(
     { 
         email: 1, 
