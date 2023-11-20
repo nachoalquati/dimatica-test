@@ -1,5 +1,11 @@
 async function getTotalVehicles() {
-    return await got.get('https://my-webservice.moveecar.com/vehicles/total');
+    try {
+        const response = await got.get('https://my-webservice.moveecar.com/vehicles/total');
+        return  JSON.parse(response)
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 async function getPlurial() {
